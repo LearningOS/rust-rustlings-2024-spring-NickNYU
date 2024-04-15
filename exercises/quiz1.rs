@@ -13,11 +13,19 @@
 //
 // No hints this time ;)
 
-// I AM NOT DONE
-
 // Put your function here!
-// fn calculate_price_of_apples {
+const BASIC_RUST_BUCKS: i32 = 2;
+const LARGER_RUST_BUCKS: i32 = 1;
+const PIVOT: i32 = 40;
 
+fn calculate_price_of_apples(num: i32) -> i32 {
+    let price = if num <= PIVOT {
+        num * BASIC_RUST_BUCKS
+    } else {
+        num * LARGER_RUST_BUCKS
+    };
+    price
+}
 // Don't modify this function!
 #[test]
 fn verify_test() {
