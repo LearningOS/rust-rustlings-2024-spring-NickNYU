@@ -21,7 +21,11 @@ impl Licensed for SomeSoftware {}
 impl Licensed for OtherSoftware {}
 
 // YOU MAY ONLY CHANGE THE NEXT LINE
-fn compare_license_types<T: Licensed, V: Licensed>(software: T, software_two: V) -> bool {
+fn compare_license_types<T, V>(software: T, software_two: V) -> bool
+where
+    T: Licensed,
+    V: Licensed,
+{
     software.licensing_info() == software_two.licensing_info()
 }
 
