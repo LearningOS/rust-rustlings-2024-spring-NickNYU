@@ -2,11 +2,9 @@
 	single linked list merge
 	This problem requires you to merge two ordered singly linked lists into one ordered singly linked list
 */
-// I AM NOT DONE
 
 use std::fmt::{self, Display, Formatter};
 use std::ptr::NonNull;
-use std::vec::*;
 
 #[derive(Debug)]
 struct Node<T> {
@@ -69,15 +67,41 @@ impl<T> LinkedList<T> {
             },
         }
     }
-	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
-	{
-		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
+}
+
+impl<T: std::cmp::PartialOrd + Clone> LinkedList<T> {
+    pub fn merge(list_a: LinkedList<T>, list_b: LinkedList<T>) -> Self {
+        let mut ret = Self::new();
+        let mut a = list_a.start;
+        let mut b = list_b.start;
+
+        unsafe {
+            while a.is_some() && b.is_some() {
+                let va = a.unwrap().as_ptr();
+                let vb = b.unwrap().as_ptr();
+                if (*va).val < (*vb).val {
+                    ret.add((*va).val.clone());
+                    a = (*va).next;
+                } else {
+                    ret.add((*vb).val.clone());
+                    b = (*vb).next;
+                }
+            }
+
+            while a.is_some() {
+                let va = a.unwrap().as_ptr();
+                ret.add((*va).val.clone());
+                a = (*va).next;
+            }
+
+            while b.is_some() {
+                let vb = b.unwrap().as_ptr();
+                ret.add((*vb).val.clone());
+                b = (*vb).next;
+            }
         }
-	}
+        ret
+    }
 }
 
 impl<T> Display for LinkedList<T>
